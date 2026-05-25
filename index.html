@@ -4,39 +4,28 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>Mumtahina Maria | Premium Portfolio</title>
 
-    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
-
     <script>
         tailwind.config = {
-            darkMode: "class",
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        darkBg: "#0b0713",
-                        accent: "#ec4899",
+                        darkBg: '#0b0713',
+                        accent: '#ec4899',
                     }
                 }
             }
         }
     </script>
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-
-    <!-- AOS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             overflow-x: hidden;
@@ -45,429 +34,895 @@
             font-family: sans-serif;
         }
 
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: #ec4899; border-radius: 20px; }
 
-        ::-webkit-scrollbar-thumb {
-            background: #ec4899;
-            border-radius: 20px;
-        }
-
+        /* ── BACKGROUND ── */
         .animated-bg {
             position: fixed;
             inset: 0;
             overflow: hidden;
             z-index: -1;
             background:
-                radial-gradient(circle at top left,
-                    rgba(236, 72, 153, 0.15),
-                    transparent 40%),
-                radial-gradient(circle at bottom right,
-                    rgba(139, 92, 246, 0.18),
-                    transparent 40%),
+                radial-gradient(circle at top left, rgba(236,72,153,.15), transparent 40%),
+                radial-gradient(circle at bottom right, rgba(139,92,246,.18), transparent 40%),
                 #0b0713;
         }
 
         @keyframes moveBlob {
-            0% {
-                transform: translate(0, 0) scale(1);
-            }
-
-            50% {
-                transform: translate(40px, -60px) scale(1.1);
-            }
-
-            100% {
-                transform: translate(0, 0) scale(1);
-            }
+            0%   { transform: translate(0,0) scale(1); }
+            50%  { transform: translate(40px,-60px) scale(1.1); }
+            100% { transform: translate(0,0) scale(1); }
         }
 
         .blob {
             position: absolute;
             border-radius: 9999px;
-            filter: blur(70px);
+            filter: blur(100px);
             opacity: .3;
             animation: moveBlob 15s ease-in-out infinite;
         }
+        .blob1 { width: 500px; height: 500px; background: #ec4899; top: -100px; left: -100px; }
+        .blob2 { width: 400px; height: 400px; background: #8b5cf6; bottom: -100px; right: -100px; animation-delay: 3s; }
+        .blob3 { width: 300px; height: 300px; background: #06b6d4; top: 40%; left: 40%; animation-delay: 5s; }
 
-        .blob1 {
-            width: 500px;
-            height: 500px;
-            background: #ec4899;
-            top: -100px;
-            left: -100px;
+        @keyframes starsMove { from { transform: translateY(0); } to { transform: translateY(-2000px); } }
+        .stars {
+            position: absolute; width: 2px; height: 2000px;
+            background: transparent;
+            box-shadow: 50px 100px white, 200px 400px white, 500px 800px white,
+                        800px 1200px white, 1000px 1500px white, 1300px 300px white,
+                        1500px 1000px white, 1800px 600px white;
+            animation: starsMove 80s linear infinite;
+            opacity: .3;
         }
 
-        .blob2 {
-            width: 400px;
-            height: 400px;
-            background: #8b5cf6;
-            bottom: -100px;
-            right: -100px;
-            animation-delay: 3s;
+        /* ── NAVBAR ── */
+        .nav-link {
+            color: rgba(255,255,255,.7);
+            transition: color .3s;
+            font-size: .875rem;
+            font-weight: 600;
+        }
+        .nav-link:hover { color: #ec4899; }
+
+        /* Mobile menu */
+        #mobile-menu {
+            display: none;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1.5rem 1.5rem;
+            background: rgba(11,7,19,.97);
+            border-top: 1px solid rgba(255,255,255,.05);
+            position: absolute;
+            width: 100%;
+            top: 64px;
+            left: 0;
+            z-index: 49;
+        }
+        #mobile-menu.open { display: flex; }
+        #mobile-menu .nav-link { font-size: 1rem; padding: .5rem 0; border-bottom: 1px solid rgba(255,255,255,.05); }
+
+        /* Hamburger */
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+        .hamburger span { display: block; width: 24px; height: 2px; background: white; border-radius: 2px; transition: .3s; }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
         }
 
-        .blob3 {
-            width: 300px;
-            height: 300px;
-            background: #06b6d4;
-            top: 40%;
-            left: 40%;
-            animation-delay: 5s;
-        }
-
+        /* ── BENTO CARD ── */
         .bento-card {
             transition: .4s;
             position: relative;
             overflow: hidden;
         }
-
         .bento-card:hover {
             transform: translateY(-12px);
-            border-color: rgba(236, 72, 153, .4);
-            box-shadow:
-                0 20px 40px rgba(236, 72, 153, .15),
-                0 0 30px rgba(236, 72, 153, .08);
+            border-color: rgba(236,72,153,.4);
+            box-shadow: 0 20px 40px rgba(236,72,153,.15), 0 0 30px rgba(236,72,153,.08);
         }
-
         .bento-card::before {
             content: '';
             position: absolute;
             inset: 0;
-            background:
-                linear-gradient(120deg,
-                    transparent,
-                    rgba(255, 255, 255, .08),
-                    transparent);
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,.08), transparent);
             transform: translateX(-100%);
             transition: .8s;
         }
-
-        .bento-card:hover::before {
-            transform: translateX(100%);
-        }
+        .bento-card:hover::before { transform: translateX(100%); }
 
         @keyframes float {
-            0% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-15px);
-            }
-
-            100% {
-                transform: translateY(0);
-            }
+            0%   { transform: translateY(0); }
+            50%  { transform: translateY(-15px); }
+            100% { transform: translateY(0); }
         }
+        .animate-float { animation: float 5s ease-in-out infinite; }
 
-        .animate-float {
-            animation: float 5s ease-in-out infinite;
-        }
+        .profile-glow { box-shadow: 0 30px 80px rgba(236,72,153,.2); }
 
-        .profile-glow {
-            box-shadow:
-                0 30px 80px rgba(236, 72, 153, .2);
-        }
-
-        .premium-btn {
-            position: relative;
-            overflow: hidden;
-        }
-
+        .premium-btn { position: relative; overflow: hidden; }
         .premium-btn::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background:
-                linear-gradient(90deg,
-                    transparent,
-                    rgba(255, 255, 255, .2),
-                    transparent);
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.2), transparent);
             transition: .8s;
         }
-
-        .premium-btn:hover::before {
-            left: 100%;
-        }
+        .premium-btn:hover::before { left: 100%; }
 
         .text-glow {
-            text-shadow:
-                0 0 10px rgba(236, 72, 153, .5),
-                0 0 40px rgba(236, 72, 153, .2);
+            text-shadow: 0 0 10px rgba(236,72,153,.5), 0 0 40px rgba(236,72,153,.2);
         }
 
-        .modal-show {
-            opacity: 1 !important;
-            pointer-events: auto !important;
+        /* ── PRELOADER ── */
+        @keyframes rocketRumble {
+            0%   { transform: translate(0,0); }
+            50%  { transform: translate(1px,-1px); }
+            100% { transform: translate(0,0); }
+        }
+        #loader-rocket {
+            animation: rocketRumble .12s infinite;
+            transition: transform .85s cubic-bezier(.6,-.28,.735,.045), opacity .5s ease;
+        }
+        #loader-rocket.blast-off { animation: none; transform: translateY(-400px) scaleY(1.6); opacity: 0; }
+
+        #preloader { transition: visibility .3s; }
+        #gate-top, #gate-bottom { transition: transform .8s cubic-bezier(.7,0,.3,1); }
+        #preloader.loaded #gate-top  { transform: translateY(-100%); }
+        #preloader.loaded #gate-bottom { transform: translateY(100%); }
+        #preloader.loaded { visibility: hidden; pointer-events: none; }
+
+        #loader-welcome.show { opacity: 1; transform: scale(1); }
+        #loader-welcome.fade-out { opacity: 0; transform: scale(1.03); filter: blur(16px); }
+
+        /* ── MODAL ── */
+        .modal-show { opacity: 1 !important; pointer-events: auto !important; }
+
+        /* ── RESPONSIVE HERO ── */
+        @media (max-width: 1023px) {
+            #hero-grid { grid-template-columns: 1fr; text-align: center; }
+            #hero-grid .hero-img-wrap { justify-content: center; order: -1; }
+            #hero-grid .hero-text { align-items: center; }
+            .hero-buttons { justify-content: center !important; }
         }
 
-        #modal>div {
-            transform: scale(.9);
-            transition: .4s;
+        /* ── RESPONSIVE SECTIONS ── */
+        @media (max-width: 640px) {
+            .section-title { font-size: 2.25rem !important; }
+            .hero-h1 { font-size: 2.5rem !important; }
+            .skills-grid { grid-template-columns: 1fr 1fr !important; }
+            .projects-grid { grid-template-columns: 1fr !important; }
+            .about-cards { grid-template-columns: 1fr !important; }
         }
 
-        #modal.modal-show>div {
-            transform: scale(1);
+        @media (max-width: 480px) {
+            .skills-grid { grid-template-columns: 1fr !important; }
+            .profile-card { width: 220px !important; height: 320px !important; }
         }
 
-        .nav-link {
-            transition: .3s;
+        /* ── MODAL RESPONSIVE ── */
+        #modal-inner {
+            grid-template-columns: 1fr 1fr;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        @media (max-width: 768px) {
+            #modal-inner {
+                grid-template-columns: 1fr;
+            }
+            #modal-img { max-height: 220px; object-fit: cover; }
         }
 
-        .nav-link:hover {
-            color: #ec4899;
+        /* ── DROPDOWN ── */
+        .dropdown { position: relative; }
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 12px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(18, 10, 30, 0.97);
+            border: 1px solid rgba(236,72,153,.2);
+            border-radius: 1rem;
+            padding: .5rem;
+            min-width: 210px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(-50%) translateY(-8px);
+            transition: opacity .25s ease, transform .25s ease, visibility .25s;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 60px rgba(0,0,0,.5), 0 0 30px rgba(236,72,153,.08);
+            z-index: 100;
+        }
+        .dropdown-menu::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-bottom: 6px solid rgba(236,72,153,.25);
+        }
+        .dropdown:hover .dropdown-menu,
+        .dropdown:focus-within .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0) translateY(0);
+        }
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: .65rem;
+            padding: .6rem .9rem;
+            border-radius: .65rem;
+            color: rgba(255,255,255,.75);
+            font-size: .8rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background .2s, color .2s;
+            white-space: nowrap;
+        }
+        .dropdown-item:hover {
+            background: rgba(236,72,153,.12);
+            color: #f0abfc;
+        }
+        .dropdown-item i { font-size: .75rem; color: #ec4899; width: 14px; text-align: center; }
+        .dropdown-toggle-icon {
+            font-size: .6rem;
+            margin-left: 4px;
+            transition: transform .25s;
+            display: inline-block;
+        }
+        .dropdown:hover .dropdown-toggle-icon { transform: rotate(180deg); }
+
+        /* Contact form */
+        .contact-input {
+            background: rgba(255,255,255,.03);
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 1rem;
+            padding: 1rem 1.5rem;
+            outline: none;
+            color: white;
+            width: 100%;
+            font-size: 1rem;
+            transition: border-color .3s;
+        }
+        .contact-input:focus { border-color: rgba(236,72,153,.5); }
+        .contact-input::placeholder { color: rgba(255,255,255,.35); }
+
+        /* Footer social icons */
+        .social-icon {
+            color: rgba(255,255,255,.6);
+            font-size: 1.5rem;
+            transition: color .3s, transform .3s;
+        }
+        .social-icon:hover { color: #ec4899; transform: translateY(-3px); }
+
+        /* Smooth section padding on mobile */
+        @media (max-width: 640px) {
+            section { padding-top: 4rem !important; padding-bottom: 4rem !important; }
         }
     </style>
 </head>
 
 <body>
 
-    <!-- PRELOADER -->
+<!-- BACKGROUND -->
+<div class="animated-bg">
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+    <div class="stars"></div>
+</div>
 
-    <div id="preloader"
-        class="fixed inset-0 z-[999999] bg-[#0c0816] flex items-center justify-center flex-col">
+<!-- PRELOADER -->
+<div id="preloader" class="fixed inset-0 z-[999999] bg-[#0c0816] flex flex-col items-center justify-center">
+    <div class="absolute inset-x-0 top-0 h-1/2 bg-[#0c0816]" id="gate-top"></div>
+    <div class="absolute inset-x-0 bottom-0 h-1/2 bg-[#0c0816]" id="gate-bottom"></div>
 
-        <h1 class="text-5xl font-black text-fuchsia-500 mb-4">
-            Loading...
+    <div id="loader-welcome"
+        class="absolute z-20 flex flex-col items-center justify-center text-center opacity-0 scale-95 transition-all duration-700 px-6">
+        <span class="text-[10px] font-mono tracking-[0.6em] text-fuchsia-400 uppercase mb-3">SYSTEM ACCESS GRANTED</span>
+        <h2 class="text-2xl md:text-5xl font-black uppercase tracking-widest text-white">
+            Welcome To
+            <span class="bg-gradient-to-r from-fuchsia-400 to-violet-400 bg-clip-text text-transparent italic">My Portfolio</span>
+        </h2>
+    </div>
+
+    <div class="relative z-10 flex flex-col items-center max-w-xs w-full px-6">
+        <div id="loader-rocket" class="w-14 h-14 mb-5 text-fuchsia-400">
+            <i class="fa-solid fa-rocket text-6xl"></i>
+        </div>
+        <h1 class="text-6xl font-light tracking-tighter text-white mb-4">
+            <span id="load-percentage" class="font-extrabold">00</span>
+            <span class="text-fuchsia-400 text-2xl">%</span>
         </h1>
+        <div class="w-full h-[2px] bg-white/5 rounded-full overflow-hidden">
+            <div id="load-progress-bar" class="h-full w-0 bg-gradient-to-r from-fuchsia-500 via-rose-400 to-violet-500 transition-all duration-100"></div>
+        </div>
+    </div>
+</div>
 
-        <div class="w-72 h-2 bg-white/10 rounded-full overflow-hidden">
-            <div id="load-progress-bar"
-                class="h-full w-0 bg-gradient-to-r from-fuchsia-500 to-violet-500 transition-all duration-300">
+<!-- NAVBAR -->
+<header class="fixed top-0 left-0 w-full z-50 backdrop-blur-xl bg-black/20 border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+
+        <a href="#" class="text-xl sm:text-2xl font-black bg-gradient-to-r from-fuchsia-500 to-rose-500 bg-clip-text text-transparent whitespace-nowrap">
+            Mumtahina Maria
+        </a>
+
+        <!-- Desktop nav -->
+        <nav class="hidden md:flex gap-1 lg:gap-2 text-sm font-semibold items-center">
+            <a href="#home" class="nav-link px-3 py-2 rounded-lg hover:bg-fuchsia-500/10 transition">Home</a>
+            <a href="#about" class="nav-link px-3 py-2 rounded-lg hover:bg-fuchsia-500/10 transition">About</a>
+            <a href="#skills" class="nav-link px-3 py-2 rounded-lg hover:bg-fuchsia-500/10 transition">Skills</a>
+            <a href="#projects" class="nav-link px-3 py-2 rounded-lg hover:bg-fuchsia-500/10 transition">Projects</a>
+            <a href="#contact" class="nav-link px-3 py-2 rounded-lg hover:bg-fuchsia-500/10 transition">Contact</a>
+        </nav>
+
+        <!-- Mobile hamburger -->
+        <button class="hamburger md:hidden" id="hamburger-btn" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu">
+        <a href="#home" class="nav-link">Home</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#skills" class="nav-link">Skills</a>
+
+        <!-- Mobile Projects Accordion -->
+        <div>
+            <button id="mobile-projects-btn"
+                class="nav-link w-full flex items-center justify-between"
+                onclick="toggleMobileProjects()">
+                <span><i class="fa-solid fa-layer-group text-fuchsia-400 mr-2"></i>Projects</span>
+                <i id="mobile-projects-icon" class="fa-solid fa-chevron-down text-fuchsia-400 text-xs transition-transform duration-300"></i>
+            </button>
+
+            <div id="mobile-projects-dropdown" class="hidden flex-col gap-1 mt-1 ml-4 pl-3 border-l border-fuchsia-500/20">
+                <a href="https://b13-a8-qurbani-mart.vercel.app" target="_blank"
+                    class="flex items-center gap-2 py-2 text-sm text-slate-300 hover:text-fuchsia-400 transition">
+                    <i class="fa-solid fa-store text-fuchsia-500 text-xs w-4"></i> Qurbani Mart
+                    <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-40 ml-auto"></i>
+                </a>
+                <a href="https://b13-a7-keen-keeper-wheat.vercel.app" target="_blank"
+                    class="flex items-center gap-2 py-2 text-sm text-slate-300 hover:text-fuchsia-400 transition">
+                    <i class="fa-solid fa-heart text-fuchsia-500 text-xs w-4"></i> KeenKeeper
+                    <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-40 ml-auto"></i>
+                </a>
+                <a href="https://maria24680.github.io/B13-A5-Github-Issue-Tracker/" target="_blank"
+                    class="flex items-center gap-2 py-2 text-sm text-slate-300 hover:text-fuchsia-400 transition">
+                    <i class="fa-brands fa-github text-fuchsia-500 text-xs w-4"></i> GitHub Tracker
+                    <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-40 ml-auto"></i>
+                </a>
+                <a href="https://smart-routine-generator-jet.vercel.app" target="_blank"
+                    class="flex items-center gap-2 py-2 text-sm text-slate-300 hover:text-fuchsia-400 transition">
+                    <i class="fa-solid fa-brain text-fuchsia-500 text-xs w-4"></i> Smart Routine
+                    <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-40 ml-auto"></i>
+                </a>
+                <a href="https://sprightly-cocada-10e41f.netlify.app" target="_blank"
+                    class="flex items-center gap-2 py-2 text-sm text-slate-300 hover:text-fuchsia-400 transition">
+                    <i class="fa-solid fa-toolbox text-fuchsia-500 text-xs w-4"></i> DigiTools
+                    <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-40 ml-auto"></i>
+                </a>
             </div>
         </div>
 
+        <a href="#contact" class="nav-link">Contact</a>
     </div>
+</header>
 
-    <!-- BACKGROUND -->
+<!-- HERO -->
+<section id="home" class="min-h-screen flex items-center justify-center px-4 sm:px-6 pt-16">
+    <div id="hero-grid" class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center py-16">
 
-    <div class="animated-bg">
-        <div class="blob blob1"></div>
-        <div class="blob blob2"></div>
-        <div class="blob blob3"></div>
-    </div>
-
-    <!-- NAVBAR -->
-
-    <header
-        class="fixed top-0 left-0 w-full z-50 backdrop-blur-xl bg-black/20 border-b border-white/5">
-
-        <div
-            class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-
-            <a href="#home"
-                class="text-2xl font-black bg-gradient-to-r from-fuchsia-500 to-rose-500 bg-clip-text text-transparent">
-                Mumtahina Maria
-            </a>
-
-            <nav class="hidden md:flex gap-8 text-sm font-semibold">
-
-                <a href="#home" class="nav-link">Home</a>
-                <a href="#about" class="nav-link">About</a>
-                <a href="#skills" class="nav-link">Skills</a>
-                <a href="#projects" class="nav-link">Projects</a>
-                <a href="#contact" class="nav-link">Contact</a>
-
-            </nav>
-
+        <!-- Image -->
+        <div class="hero-img-wrap flex justify-center" data-aos="zoom-in">
+            <div class="profile-card w-64 sm:w-72 lg:w-80 h-[380px] sm:h-[440px] lg:h-[500px] rounded-[40px] overflow-hidden border border-fuchsia-500/20 animate-float profile-glow">
+                <img src="img/Profile.png"
+    class="w-full h-full object-cover object-top" alt="Profile Photo">
+            </div>
         </div>
 
-    </header>
+        <!-- Text -->
+        <div class="hero-text flex flex-col items-center lg:items-start text-center lg:text-left" data-aos="fade-left">
+            <span class="uppercase tracking-[0.4em] text-fuchsia-500 text-xs font-mono">MERN STACK DEVELOPER</span>
 
-    <!-- HERO -->
-
-    <section id="home"
-        class="min-h-screen flex items-center justify-center px-6">
-
-        <div
-            class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-
-            <div class="flex justify-center" data-aos="zoom-in">
-
-                <div
-                    class="w-full max-w-[320px] h-[450px] rounded-[40px] overflow-hidden border border-fuchsia-500/20 animate-float profile-glow">
-
-                    <img
-                        src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80"
-                        alt="Profile"
-                        class="w-full h-full object-cover">
-
-                </div>
-
-            </div>
-
-            <div class="text-center lg:text-left">
-
-                <span
-                    class="uppercase tracking-[0.4em] text-fuchsia-500 text-xs font-mono">
-                    MERN STACK DEVELOPER
+            <h1 class="hero-h1 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase leading-none mt-4 mb-6 text-glow">
+                Building
+                <span class="bg-gradient-to-r from-fuchsia-500 via-rose-400 to-violet-500 bg-clip-text text-transparent italic">
+                    Premium
                 </span>
+                Digital Products
+            </h1>
 
-                <h1
-                    class="text-5xl md:text-7xl font-black uppercase leading-none mt-6 mb-6 text-glow">
+            <p class="text-slate-300 text-base sm:text-lg leading-relaxed mb-8 max-w-xl">
+                I build beautiful modern websites and premium web applications with smooth UI and scalable backend systems.
+            </p>
 
-                    Building
-                    <span
-                        class="bg-gradient-to-r from-fuchsia-500 via-rose-400 to-violet-500 bg-clip-text text-transparent italic">
-                        Premium
-                    </span>
-                    Digital Products
-
-                </h1>
-
-                <p class="text-slate-300 text-lg leading-relaxed mb-10">
-
-                    I build beautiful modern websites and premium web
-                    applications with smooth UI and scalable backend systems.
-
-                </p>
-
-                <div class="flex flex-wrap gap-3 mb-8">
-
-                    <span
-                        class="px-4 py-2 rounded-full bg-white/5 border border-white/10">
-                        Next.js
-                    </span>
-
-                    <span
-                        class="px-4 py-2 rounded-full bg-white/5 border border-white/10">
-                        MongoDB
-                    </span>
-
-                    <span
-                        class="px-4 py-2 rounded-full bg-white/5 border border-white/10">
-                        Tailwind
-                    </span>
-
-                </div>
-
-                <div
-                    class="flex flex-wrap gap-4 justify-center lg:justify-start">
-
-                    <a href="#projects"
-                        class="premium-btn px-8 py-4 rounded-2xl bg-gradient-to-r from-fuchsia-500 to-rose-500 text-white font-bold shadow-xl hover:scale-105 transition">
-
-                        View Projects
-
-                    </a>
-
-                    <a href="#contact"
-                        class="premium-btn px-8 py-4 rounded-2xl border border-fuchsia-500/20 font-bold hover:border-fuchsia-500 transition">
-
-                        Hire Me
-
-                    </a>
-
-                </div>
-
+            <div class="hero-buttons flex flex-wrap gap-4 justify-center lg:justify-start">
+                <a href="#projects"
+                    class="premium-btn px-6 sm:px-8 py-3 sm:py-4 rounded-2xl bg-gradient-to-r from-fuchsia-500 to-rose-500 text-white font-bold shadow-xl hover:scale-105 transition text-sm sm:text-base">
+                    <i class="fa-solid fa-layer-group mr-2"></i>View Projects
+                </a>
+                <a href="#contact"
+                    class="premium-btn px-6 sm:px-8 py-3 sm:py-4 rounded-2xl border border-fuchsia-500/20 font-bold hover:border-fuchsia-500 transition text-sm sm:text-base">
+                    <i class="fa-solid fa-paper-plane mr-2"></i>Hire Me
+                </a>
             </div>
-
         </div>
 
-    </section>
+    </div>
+</section>
 
-    <!-- ABOUT -->
-
-    <section id="about" class="py-28 px-6 bg-[#0b0713] text-white">
-
+<!-- ABOUT -->
+<section id="about" class="py-20 sm:py-28 px-4 sm:px-6 bg-[#0b0713] text-white">
     <div class="max-w-6xl mx-auto text-center">
 
-        <!-- Heading -->
-        <h2 class="text-5xl md:text-6xl font-black mb-6">
+        <h2 class="section-title text-4xl sm:text-5xl md:text-6xl font-black mb-6">
             About <span class="text-fuchsia-500">Me</span>
         </h2>
-
         <div class="w-20 h-1 bg-fuchsia-500 mx-auto mb-10 rounded-full"></div>
 
-        <!-- Description -->
-        <p class="text-slate-300 leading-relaxed text-lg md:text-xl max-w-3xl mx-auto">
-            I am a passionate <span class="text-fuchsia-400 font-semibold">Frontend</span> and 
+        <p class="text-slate-300 leading-relaxed text-base sm:text-lg md:text-xl max-w-3xl mx-auto">
+            I am a passionate <span class="text-fuchsia-400 font-semibold">Frontend</span> and
             <span class="text-fuchsia-400 font-semibold">MERN Stack Developer</span> who loves building
             modern, responsive, and user-friendly web applications.
             I focus on writing clean code, creating smooth UI experiences, and developing scalable systems
             that solve real-world problems.
         </p>
 
-        <!-- Cards -->
-        <div class="grid md:grid-cols-3 gap-6 mt-16">
-
-            <div class="bg-white/5 border border-white/10 rounded-2xl p-6 hover:scale-105 transition">
+        <div class="about-cards grid sm:grid-cols-2 md:grid-cols-3 gap-6 mt-14">
+            <div class="bg-white/5 border border-white/10 rounded-2xl p-6 hover:scale-105 transition" data-aos="fade-up">
                 <i class="fa-solid fa-code text-fuchsia-500 text-3xl mb-4"></i>
                 <h3 class="text-xl font-bold mb-2">Clean Code</h3>
-                <p class="text-slate-400 text-sm">
-                    I write maintainable and reusable code with best practices.
-                </p>
+                <p class="text-slate-400 text-sm">I write maintainable and reusable code with best practices.</p>
             </div>
-
-            <div class="bg-white/5 border border-white/10 rounded-2xl p-6 hover:scale-105 transition">
+            <div class="bg-white/5 border border-white/10 rounded-2xl p-6 hover:scale-105 transition" data-aos="fade-up" data-aos-delay="100">
                 <i class="fa-solid fa-bolt text-fuchsia-500 text-3xl mb-4"></i>
                 <h3 class="text-xl font-bold mb-2">Fast Performance</h3>
-                <p class="text-slate-400 text-sm">
-                    Optimized websites with smooth animations and fast load times.
-                </p>
+                <p class="text-slate-400 text-sm">Optimized websites with smooth animations and fast load times.</p>
             </div>
-
-            <div class="bg-white/5 border border-white/10 rounded-2xl p-6 hover:scale-105 transition">
+            <div class="bg-white/5 border border-white/10 rounded-2xl p-6 hover:scale-105 transition sm:col-span-2 md:col-span-1" data-aos="fade-up" data-aos-delay="200">
                 <i class="fa-solid fa-layer-group text-fuchsia-500 text-3xl mb-4"></i>
                 <h3 class="text-xl font-bold mb-2">Modern UI</h3>
-                <p class="text-slate-400 text-sm">
-                    I design modern interfaces with attention to detail and UX.
-                </p>
+                <p class="text-slate-400 text-sm">I design modern interfaces with attention to detail and UX.</p>
             </div>
-
         </div>
 
     </div>
-
 </section>
 
-    <!-- SKILLS -->
-
-    <section id="skills" class="py-28 px-6 bg-[#0b0713] text-white">
-
+<!-- SKILLS -->
+<section id="skills" class="py-20 sm:py-28 px-4 sm:px-6 bg-[#0b0713] text-white">
     <div class="max-w-6xl mx-auto">
 
-        <!-- Heading -->
-        <h2 class="text-5xl font-black text-center mb-4">
+        <h2 class="section-title text-4xl sm:text-5xl font-black text-center mb-4">
             My <span class="text-fuchsia-500">Skills</span>
         </h2>
-
-        <div class="w-20 h-1 bg-fuchsia-500 mx-auto mb-16 rounded-full"></div>
-
-        <p class="text-center text-slate-400 max-w-2xl mx-auto mb-16">
+        <div class="w-20 h-1 bg-fuchsia-500 mx-auto mb-10 rounded-full"></div>
+        <p class="text-center text-slate-400 max-w-2xl mx-auto mb-12 text-sm sm:text-base">
             These are the technologies I use to build modern, scalable and high-performance web applications.
         </p>
 
-        <!-- Skills Grid -->
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="skills-grid grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
 
-            <div class="group bento-card p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-fuchsia-500 transition">
-                <i class="fa-brands fa-html5 text-orange-500 text-4xl mb-4"></i>
-                <h3 class="text-xl font-bold group-hover:text-fuchsia-400">HTML5</h3>
-                <p class="text-sm text-slate-400 mt-2">Semantic and accessible markup structure.</p>
+            <div class="group bento-card p-6 sm:p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-fuchsia-500 transition" data-aos="fade-up">
+                <i class="fa-brands fa-html5 text-orange-500 text-3xl sm:text-4xl mb-4"></i>
+                <h3 class="text-lg sm:text-xl font-bold group-hover:text-fuchsia-400">HTML5</h3>
+                <p class="text-xs sm:text-sm text-slate-400 mt-2">Semantic and accessible markup structure.</p>
             </div>
 
-            <div class="group bento-card p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-fuchsia-500 transition">
-                <i class="fa-brands fa-css3-alt text-blue-500 text-4xl mb-4"></i>
-                <h3 class="text-xl font-bold group-hover:text-fuchsia-400">CSS / Tailwind</h3>
-                <p class="text-sm text-slate-400 mt-2">Modern responsive UI with utility-first styling.</p>
+            <div class="group bento-card p-6 sm:p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-fuchsia-500 transition" data-aos="fade-up" data-aos-delay="100">
+                <i class="fa-brands fa-css3-alt text-blue-500 text-3xl sm:text-4xl mb-4"></i>
+                <h3 class="text-lg sm:text-xl font-bold group-hover:text-fuchsia-400">CSS / Tailwind</h3>
+                <p class="text-xs sm:text-sm text-slate-400 mt-2">Modern responsive UI with utility-first styling.</p>
             </div>
 
-            <div class="group bento-card p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-fuchsia-500 transition">
-                <i class="fa-brands fa-js text-yellow-400 text-4xl mb-4"></i>
-                <h3 class="text-xl font-bold group-hover:text-fuchsia-400">JavaScript</h3>
-                <p class="text-sm text-slate-400 mt-2">Dynamic and interactive web functionality.</p>
+            <div class="group bento-card p-6 sm:p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-fuchsia-500 transition" data-aos="fade-up" data-aos-delay="200">
+                <i class="fa-brands fa-js text-yellow-400 text-3xl sm:text-4xl mb-4"></i>
+                <h3 class="text-lg sm:text-xl font-bold group-hover:text-fuchsia-400">JavaScript</h3>
+                <p class="text-xs sm:text-sm text-slate-400 mt-2">Dynamic and interactive web functionality.</p>
             </div>
 
-            <div class="group bento-card p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-fuchsia-500 transition">
-                <i class="fa-brands fa-react text-cyan-400 text-4xl mb-4"></i>
-                <h3 class="text-xl font-bold group-hover:text-fuchsia-400">React / Next.js</h3>
-                <p class="text-sm text-slate-400 mt-2">Component-based scalable frontend applications.</p>
+            <div class="group bento-card p-6 sm:p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-fuchsia-500 transition" data-aos="fade-up" data-aos-delay="300">
+                <i class="fa-brands fa-react text-cyan-400 text-3xl sm:text-4xl mb-4"></i>
+                <h3 class="text-lg sm:text-xl font-bold group-hover:text-fuchsia-400">React / Next.js</h3>
+                <p class="text-xs sm:text-sm text-slate-400 mt-2">Component-based scalable frontend applications.</p>
+            </div>
+
+            <div class="group bento-card p-6 sm:p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-fuchsia-500 transition" data-aos="fade-up">
+                <i class="fa-brands fa-node-js text-green-500 text-3xl sm:text-4xl mb-4"></i>
+                <h3 class="text-lg sm:text-xl font-bold group-hover:text-fuchsia-400">Node.js</h3>
+                <p class="text-xs sm:text-sm text-slate-400 mt-2">Server-side JavaScript with Express APIs.</p>
+            </div>
+
+            <div class="group bento-card p-6 sm:p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-fuchsia-500 transition" data-aos="fade-up" data-aos-delay="100">
+                <i class="fa-solid fa-database text-green-400 text-3xl sm:text-4xl mb-4"></i>
+                <h3 class="text-lg sm:text-xl font-bold group-hover:text-fuchsia-400">MongoDB</h3>
+                <p class="text-xs sm:text-sm text-slate-400 mt-2">NoSQL database for scalable applications.</p>
+            </div>
+
+            <div class="group bento-card p-6 sm:p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-fuchsia-500 transition" data-aos="fade-up" data-aos-delay="200">
+                <i class="fa-brands fa-git-alt text-orange-400 text-3xl sm:text-4xl mb-4"></i>
+                <h3 class="text-lg sm:text-xl font-bold group-hover:text-fuchsia-400">Git / GitHub</h3>
+                <p class="text-xs sm:text-sm text-slate-400 mt-2">Version control and collaborative workflows.</p>
+            </div>
+
+            <div class="group bento-card p-6 sm:p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-fuchsia-500 transition" data-aos="fade-up" data-aos-delay="300">
+                <i class="fa-solid fa-fire text-amber-400 text-3xl sm:text-4xl mb-4"></i>
+                <h3 class="text-lg sm:text-xl font-bold group-hover:text-fuchsia-400">Firebase</h3>
+                <p class="text-xs sm:text-sm text-slate-400 mt-2">Auth, Firestore, and real-time features.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="py-28 px-6 bg-[#030303] text-white">
+
+    <div class="max-w-7xl mx-auto">
+
+        <div class="text-center mb-20">
+
+            <span
+                class="uppercase tracking-[0.4em] text-fuchsia-500 text-xs font-mono bg-fuchsia-500/10 px-3 py-1 rounded-full border border-fuchsia-500/20">
+                Projects
+            </span>
+
+            <h2 class="text-5xl font-black uppercase mt-4 tracking-tight">
+                Featured Works
+            </h2>
+
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <!-- QURBANI MART -->
+
+            <div
+                class="group bento-card bg-white/[0.02] border border-white/5 rounded-3xl overflow-hidden">
+
+                <div onclick="openModal(this)"
+                    class="relative h-60 w-full overflow-hidden cursor-pointer"
+
+                    data-title="Qurbani Mart"
+
+                    data-desc="Modern e-commerce platform for browsing, filtering and booking sacrificial animals."
+
+                    data-challenges="• Complex filtering state management.<br>• Protected route booking flows."
+
+                    data-future="• Stripe integration.<br>• Real-time stock sync.<br>• Buyer-seller chat system."
+
+                    data-repo="https://github.com/maria24680/B13-A8-Qurbani-Mart"
+
+                    data-live="https://b13-a8-qurbani-mart.vercel.app">
+
+                    <img
+                        src="img/Qurbani mart.png"
+                        class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105">
+
+                </div>
+
+                <div class="p-6">
+
+                    <div class="flex items-center justify-between">
+
+                        <div><span
+                            class="text-xs font-mono text-fuchsia-500 uppercase tracking-wider">
+                            Next.js / E-Commerce
+                        </span>
+
+                       </div>
+
+
+                        <div class="flex gap-3 text-sm text-gray-400">
+
+                            <a href="https://github.com/maria24680/B13-A8-Qurbani-Mart"
+                                target="_blank">
+                                <i class="fab fa-github"></i>
+                            </a>
+
+                            <a href="https://b13-a8-qurbani-mart.vercel.app"
+                                target="_blank">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    <h3
+                        onclick="openModal(this.parentElement.previousElementSibling)"
+                        class="text-2xl font-bold my-2 cursor-pointer">
+
+                        Qurbani Mart
+
+                    </h3>
+                     <p class="opacity-70 text-sm leading-relaxed">
+    Modern e-commerce platform for browsing, filtering and
+    booking sacrificial animals.
+</p>
+
+                </div>
+
+
+            </div>
+
+            <!-- KEENKEEPER -->
+
+            <div
+                class="group bento-card bg-white/[0.02] border border-white/5 rounded-3xl overflow-hidden">
+
+                <div onclick="openModal(this)"
+                    class="relative h-60 w-full overflow-hidden cursor-pointer"
+
+                    data-title="KeenKeeper"
+
+                    data-desc="Track communication timelines and monitor friendship health using analytics."
+
+                    data-challenges="• Dynamic timeline rendering.<br>• Responsive charts."
+
+                    data-future="• Push notifications.<br>• Google contacts sync."
+
+                    data-repo="https://github.com/maria24680/B13-A7-Keen-Keeper"
+
+                    data-live="https://b13-a7-keen-keeper-wheat.vercel.app">
+
+                    <img
+                        src="img/keen keeper.png"
+                        class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105">
+
+                </div>
+
+                <div class="p-6">
+
+                    <div class="flex items-center justify-between">
+
+                        <span
+                            class="text-xs font-mono text-fuchsia-500 uppercase tracking-wider">
+                            React / Analytics
+                        </span>
+
+                        <div class="flex gap-3 text-sm text-gray-400">
+
+                            <a href="https://github.com/maria24680/B13-A7-Keen-Keeper"
+                                target="_blank">
+                                <i class="fab fa-github"></i>
+                            </a>
+
+                            <a href="https://b13-a7-keen-keeper-wheat.vercel.app"
+                                target="_blank">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    <h3
+                        onclick="openModal(this.parentElement.previousElementSibling)"
+                        class="text-2xl font-bold my-2 cursor-pointer">
+
+                        KeenKeeper
+
+                    </h3>
+                    <p class="opacity-70 text-sm leading-relaxed">
+    Friendship management platform with analytics dashboards,
+    communication tracking and social interaction insights.
+</p>
+
+                </div>
+
+            </div>
+
+            <!-- GITHUB TRACKER -->
+
+            <div
+                class="group bento-card bg-white/[0.02] border border-white/5 rounded-3xl overflow-hidden">
+
+                <div onclick="openModal(this)"
+                    class="relative h-60 w-full overflow-hidden cursor-pointer"
+
+                    data-title="GitHub Issues Tracker"
+
+                    data-desc="Issue tracking application using REST APIs and dynamic filtering."
+
+                    data-challenges="• Async API loading.<br>• DOM state updates."
+
+                    data-future="• GitHub OAuth.<br>• Markdown preview support."
+
+                    data-repo="https://github.com/maria24680/B13-A5-Github-Issue-Tracker"
+
+                    data-live="https://maria24680.github.io/B13-A5-Github-Issue-Tracker/">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?q=80&w=1200"
+                        class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105">
+
+                </div>
+
+                <div class="p-6">
+
+                    <div class="flex items-center justify-between">
+
+                        <span
+                            class="text-xs font-mono text-fuchsia-500 uppercase tracking-wider">
+                            Vanilla JS / REST API
+                        </span>
+
+                        <div class="flex gap-3 text-sm text-gray-400">
+
+                            <a href="https://github.com/maria24680/B13-A5-Github-Issue-Tracker"
+                                target="_blank">
+                                <i class="fab fa-github"></i>
+                            </a>
+
+                            <a href="https://maria24680.github.io/B13-A5-Github-Issue-Tracker/"
+                                target="_blank">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    <h3
+                        onclick="openModal(this.parentElement.previousElementSibling)"
+                        class="text-2xl font-bold my-2 cursor-pointer">
+
+                        GitHub Tracker
+
+                    </h3>
+                    <p class="opacity-70 text-sm leading-relaxed">
+    Real-world issue tracking application powered by REST APIs,
+    filtering systems and dynamic DOM rendering.
+</p>
+
+                </div>
+
+            </div>
+
+            <!-- SMART ROUTINE -->
+
+            <div
+                class="group bento-card bg-white/[0.02] border border-white/5 rounded-3xl overflow-hidden">
+
+                <div onclick="openModal(this)"
+                    class="relative h-60 w-full overflow-hidden cursor-pointer"
+
+                    data-title="Smart Study Routine Auto-Generator"
+
+                    data-desc="AI-powered routine generator based on deadlines and study priorities."
+
+                    data-challenges="• Schedule optimization.<br>• Better Auth sessions."
+
+                    data-future="• AI study planning.<br>• Calendar integrations."
+
+                    data-repo="https://github.com/maria24680/Smart-Routine-Generator"
+
+                    data-live="https://smart-routine-generator-jet.vercel.app">
+
+                    <img
+                        src="img/Smart routine generator (2).png"
+                        class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105">
+
+                </div>
+
+                <div class="p-6">
+
+                    <div class="flex items-center justify-between">
+
+                        <span
+                            class="text-xs font-mono text-fuchsia-500 uppercase tracking-wider">
+                            Next.js / MongoDB
+                        </span>
+
+                        <div class="flex gap-3 text-sm text-gray-400">
+
+                            <a href="https://github.com/maria24680/Smart-Routine-Generator"
+                                target="_blank">
+                                <i class="fab fa-github"></i>
+                            </a>
+
+                            <a href="https://smart-routine-generator-jet.vercel.app"
+                                target="_blank">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    <h3
+                        onclick="openModal(this.parentElement.previousElementSibling)"
+                        class="text-2xl font-bold my-2 cursor-pointer">
+
+                        Smart Routine
+
+                    </h3>
+                    <p class="opacity-70 text-sm leading-relaxed">
+    AI-powered study routine generator that builds smart schedules
+    based on deadlines, priorities and learning goals.
+</p>
+
+                </div>
+
+            </div>
+
+            <!-- DIGITOOLS -->
+
+            <div
+                class="group bento-card bg-white/[0.02] border border-white/5 rounded-3xl overflow-hidden">
+
+                <div onclick="openModal(this)"
+                    class="relative h-60 w-full overflow-hidden cursor-pointer"
+
+                    data-title="Digital Tools Buying Website"
+
+                    data-desc="Modern digital marketplace with fast cart operations and toast notifications."
+
+                    data-challenges="• Dynamic cart mutation.<br>• Quantity management."
+
+                    data-future="• Cloud database.<br>• Admin dashboard."
+
+                    data-repo="https://github.com/maria24680/B13-A6-DigiTools-Platform"
+
+                    data-live="https://sprightly-cocada-10e41f.netlify.app">
+
+                    <img
+                        src="img/Digi tools.png"
+                        class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105">
+
+                </div>
+
+                <div class="p-6">
+
+                    <div class="flex items-center justify-between">
+
+                        <span
+                            class="text-xs font-mono text-fuchsia-500 uppercase tracking-wider">
+                            React.js / Frontend
+                        </span>
+
+                        <div class="flex gap-3 text-sm text-gray-400">
+
+                            <a href="https://github.com/maria24680/B13-A6-DigiTools-Platform"
+                                target="_blank">
+                                <i class="fab fa-github"></i>
+                            </a>
+
+                            <a href="https://sprightly-cocada-10e41f.netlify.app"
+                                target="_blank">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    <h3
+                        onclick="openModal(this.parentElement.previousElementSibling)"
+                        class="text-2xl font-bold my-2 cursor-pointer">
+
+                        DigiTools Platform
+
+                    </h3>
+                    <p class="opacity-70 text-sm leading-relaxed">
+    Modern digital marketplace featuring responsive UI,
+    fast cart operations and smooth shopping interactions.
+</p>
+
+                </div>
+
             </div>
 
         </div>
@@ -476,311 +931,205 @@
 
 </section>
 
-    <!-- PROJECTS -->
-
-    <section id="projects" class="py-28 px-6">
-
-        <div class="max-w-7xl mx-auto">
-
-            <div class="text-center mb-20">
-
-                <span
-                    class="uppercase tracking-[0.4em] text-fuchsia-500 text-xs font-mono">
-                    Projects
-                </span>
-
-                <h2 class="text-5xl font-black uppercase mt-4">
-                    Featured Works
-                </h2>
-
-            </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-                <!-- CARD -->
-
-                <div
-                    class="group bento-card bg-white/[0.02] border border-white/5 rounded-3xl overflow-hidden">
-
-                    <div onclick="openModal(this)"
-                        class="relative h-60 w-full overflow-hidden cursor-pointer"
-
-                        data-title="Qurbani Mart"
-
-                        data-desc="Modern e-commerce platform."
-
-                        data-challenges="• Filtering system"
-
-                        data-future="• Stripe Integration"
-
-                        data-repo="https://github.com/maria24680/B13-A8-Qurbani-Mart"
-
-                        data-live="https://b13-a8-qurbani-mart.vercel.app">
-
-                        <img
-                            src="./img/qurbani-mart.png"
-                            alt="Qurbani Mart"
-                            class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105">
-
-                    </div>
-
-                    <div class="p-6 flex flex-col h-[220px]">
-
-                        <div class="flex items-center justify-between">
-
-                            <span
-                                class="text-xs font-mono text-fuchsia-500 uppercase tracking-wider">
-                                Next.js
-                            </span>
-
-                        </div>
-
-                        <h3 class="text-2xl font-bold my-4">
-                            Qurbani Mart
-                        </h3>
-
-                        <p class="opacity-70 text-sm leading-relaxed mt-auto">
-
-                            Modern e-commerce platform with booking features.
-
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- CONTACT -->
-
-    <section id="contact" class="py-28 px-6">
-
-        <div class="max-w-4xl mx-auto text-center">
-
-            <h2 class="text-5xl font-black mb-8">
-                Let's Work Together
-            </h2>
-
-            <form id="contactForm" class="grid gap-6">
-
-                <input type="text"
-                    placeholder="Your Name"
-                    class="bg-white/[0.03] border border-white/5 rounded-2xl px-6 py-4 outline-none">
-
-                <input type="email"
-                    placeholder="Your Email"
-                    class="bg-white/[0.03] border border-white/5 rounded-2xl px-6 py-4 outline-none">
-
-                <textarea rows="6"
-                    placeholder="Your Message"
-                    class="bg-white/[0.03] border border-white/5 rounded-2xl px-6 py-4 outline-none"></textarea>
-
-                <button type="submit"
-                    class="premium-btn bg-gradient-to-r from-fuchsia-500 to-rose-500 text-white py-4 rounded-2xl font-bold">
-
-                    Send Message
-
-                </button>
-
-            </form>
-
-        </div>
-
-    </section>
-
-    <!-- FOOTER -->
-
-    <footer class="py-10 text-center border-t border-white/5">
-
-        <div class="flex justify-center gap-6 text-2xl mb-6">
-
-            <a href="https://github.com/maria24680" target="_blank">
-                <i class="fa-brands fa-github"></i>
-            </a>
-
-            <a href="https://www.linkedin.com/in/mumtahina-maria-/">
-                <i class="fa-brands fa-linkedin"></i>
-            </a>
-
-            <a href="https://www.facebook.com/mumtahina.maru">
-                <i class="fa-solid fa-envelope"></i>
-            </a>
-
-        </div>
-
-        <p class="opacity-60">
-            © 2026 Mumtahina Maria • Premium Portfolio
-        </p>
-
-    </footer>
-
-    <!-- MODAL -->
-
-    <div id="modal"
-        class="fixed inset-0 bg-black/70 backdrop-blur-xl flex items-center justify-center p-6 opacity-0 pointer-events-none transition duration-300 z-[99999]">
-
-        <div
-            class="bg-[#120d1f] border border-white/10 max-w-5xl w-full rounded-3xl overflow-hidden grid md:grid-cols-2">
-
-            <img
-                src=""
-                alt="Project"
-                class="w-full h-full object-cover">
-
-            <div class="p-10 flex flex-col justify-between">
-
-                <div>
-
-                    <h2 class="text-4xl font-black mb-6">
-                    </h2>
-
-                    <p class="opacity-70 mb-8">
-                    </p>
-
-                    <h4 class="text-fuchsia-400 font-bold mb-4">
-                        Challenges
-                    </h4>
-
-                    <ul class="space-y-3 opacity-70 mb-8"></ul>
-
-                    <h4 class="text-violet-400 font-bold mb-4">
-                        Future Plans
-                    </h4>
-
-                    <ul class="space-y-3 opacity-70"></ul>
-
-                </div>
-
-                <div class="flex gap-4 mt-10">
-
-                    <a href="#"
-                        target="_blank"
-                        class="premium-btn px-6 py-3 rounded-xl bg-gradient-to-r from-fuchsia-500 to-rose-500 font-bold">
-
-                        GitHub Repo
-
-                    </a>
-
-                    <a href="#"
-                        target="_blank"
-                        class="premium-btn px-6 py-3 rounded-xl border border-white/10 font-bold">
-
-                        Live Preview
-
-                    </a>
-
-                </div>
-
-            </div>
-
-        </div>
-
+<!-- CONTACT -->
+<section id="contact" class="py-20 sm:py-28 px-4 sm:px-6">
+    <div class="max-w-2xl mx-auto text-center">
+        <span class="uppercase tracking-[0.4em] text-fuchsia-500 text-xs font-mono">Contact</span>
+        <h2 class="section-title text-4xl sm:text-5xl font-black uppercase mt-4 mb-8">Let's Work Together</h2>
+
+        <form class="grid gap-4 sm:gap-6" onsubmit="handleSubmit(event)">
+            <input type="text" placeholder="Your Name" class="contact-input" required>
+            <input type="email" placeholder="Your Email" class="contact-input" required>
+            <textarea rows="6" placeholder="Your Message" class="contact-input resize-none" required></textarea>
+            <button type="submit"
+                class="premium-btn bg-gradient-to-r from-fuchsia-500 to-rose-500 text-white py-4 rounded-2xl font-bold hover:scale-105 transition text-sm sm:text-base">
+                <i class="fa-solid fa-paper-plane mr-2"></i>Send Message
+            </button>
+        </form>
     </div>
+</section>
 
-    <!-- AOS -->
+<!-- FOOTER -->
+<footer class="py-10 text-center border-t border-white/5 px-4">
+    <div class="flex justify-center gap-6 mb-6">
+        <a href="https://github.com/maria24680" target="_blank" class="social-icon"><i class="fa-brands fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/mumtahina-maria-/" target="_blank" class="social-icon"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="https://www.facebook.com/mumtahina.maru" target="_blank" class="social-icon"><i class="fa-brands fa-facebook"></i></a>
+    </div>
+    <p class="opacity-60 text-sm">© 2026 Mumtahina Maria • Premium Portfolio</p>
+</footer>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<!-- MODAL -->
+<div id="modal"
+    class="fixed inset-0 bg-black/70 backdrop-blur-xl flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition duration-300 z-[99999]">
 
-    <script>
+    <div id="modal-inner"
+        class="bg-[#120d1f] border border-white/10 max-w-5xl w-full rounded-3xl overflow-hidden grid">
 
-        AOS.init({
-            duration: 1000,
-            once: true
-        })
+        <img id="modal-img"
+            src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200"
+            class="w-full object-cover" style="max-height: 280px;" alt="Project Preview">
 
-        // PRELOADER
+        <div class="p-6 sm:p-10 flex flex-col justify-between">
+            <div>
+                <h2 class="text-2xl sm:text-4xl font-black mb-4">AI Dashboard</h2>
+                <p class="opacity-70 mb-6 text-sm sm:text-base">Premium analytics dashboard with AI integration.</p>
 
-        window.addEventListener("load", () => {
+                <h4 class="text-fuchsia-400 font-bold mb-3 text-sm sm:text-base">Challenges Faced</h4>
+                <ul class="space-y-2 opacity-70 mb-6 text-sm"></ul>
 
-            const preloader =
-                document.getElementById("preloader")
+                <h4 class="text-violet-400 font-bold mb-3 text-sm sm:text-base">Future Implementations</h4>
+                <ul class="space-y-2 opacity-70 text-sm"></ul>
+            </div>
 
-            const bar =
-                document.getElementById("load-progress-bar")
+            <div class="flex flex-wrap gap-3 mt-8">
+                <a href="#"
+                    class="premium-btn px-5 sm:px-6 py-3 rounded-xl bg-gradient-to-r from-fuchsia-500 to-rose-500 font-bold text-sm">
+                    <i class="fab fa-github mr-2"></i>GitHub Repo
+                </a>
+                <a href="#"
+                    class="premium-btn px-5 sm:px-6 py-3 rounded-xl border border-white/10 font-bold text-sm hover:border-fuchsia-500 transition">
+                    <i class="fas fa-external-link-alt mr-2"></i>Live Preview
+                </a>
+                <button onclick="closeModal()"
+                    class="px-5 py-3 rounded-xl border border-white/10 font-bold text-sm opacity-60 hover:opacity-100 transition ml-auto">
+                    ✕ Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
-            bar.style.width = "100%"
+<!-- AOS -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-            setTimeout(() => {
+<script>
+    // ── PRELOADER ──
+    document.body.style.overflow = 'hidden';
 
-                preloader.style.opacity = "0"
+    document.addEventListener('DOMContentLoaded', () => {
+        const percentText   = document.getElementById('load-percentage');
+        const progressBar   = document.getElementById('load-progress-bar');
+        const preloader     = document.getElementById('preloader');
+        const rocket        = document.getElementById('loader-rocket');
+        const welcome       = document.getElementById('loader-welcome');
 
+        let progress = 0;
+
+        const timer = setInterval(() => {
+            progress += Math.floor(Math.random() * 5) + 4;
+            if (progress >= 100) {
+                progress = 100;
+                clearInterval(timer);
+                progressBar.style.width = '100%';
+                percentText.innerText = '100';
+                rocket.classList.add('blast-off');
                 setTimeout(() => {
-
-                    preloader.style.display = "none"
-
-                }, 500)
-
-            }, 1000)
-
-        })
-
-        // CONTACT
-
-        document
-            .getElementById("contactForm")
-            .addEventListener("submit", function (e) {
-
-                e.preventDefault()
-
-                alert("Message Sent Successfully!")
-
-            })
-
-        // MODAL
-
-        function openModal(el) {
-
-            const modal =
-                document.getElementById("modal")
-
-            modal.classList.add("modal-show")
-
-            const imageElement =
-                el.querySelector("img")
-
-            if (imageElement) {
-
-                modal.querySelector("img").src =
-                    imageElement.src
+                    welcome.classList.add('show');
+                    setTimeout(() => {
+                        welcome.classList.add('fade-out');
+                        setTimeout(() => {
+                            preloader.classList.add('loaded');
+                            document.body.style.overflow = 'auto';
+                        }, 600);
+                    }, 1400);
+                }, 400);
+            } else {
+                progressBar.style.width = progress + '%';
+                percentText.innerText = progress < 10 ? '0' + progress : progress;
             }
+        }, 40);
+    });
 
-            modal.querySelector("h2").innerText =
-                el.dataset.title
+    // ── AOS ──
+    AOS.init({ duration: 900, once: true, offset: 60 });
 
-            modal.querySelector("p").innerText =
-                el.dataset.desc
-
-            modal.querySelectorAll("ul")[0].innerHTML =
-                el.dataset.challenges
-
-            modal.querySelectorAll("ul")[1].innerHTML =
-                el.dataset.future
-
-            modal.querySelectorAll("a")[0].href =
-                el.dataset.repo
-
-            modal.querySelectorAll("a")[1].href =
-                el.dataset.live
+    // ── MOBILE PROJECTS ACCORDION ──
+    function toggleMobileProjects() {
+        const dropdown = document.getElementById('mobile-projects-dropdown');
+        const icon     = document.getElementById('mobile-projects-icon');
+        const isOpen   = !dropdown.classList.contains('hidden');
+        if (isOpen) {
+            dropdown.classList.add('hidden');
+            dropdown.classList.remove('flex');
+            icon.style.transform = 'rotate(0deg)';
+        } else {
+            dropdown.classList.remove('hidden');
+            dropdown.classList.add('flex');
+            icon.style.transform = 'rotate(180deg)';
         }
+    }
 
-        document
-            .getElementById("modal")
-            .addEventListener("click", function (e) {
+    // ── HAMBURGER MENU ──
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const mobileMenu   = document.getElementById('mobile-menu');
 
-                if (e.target.id === "modal") {
+    hamburgerBtn.addEventListener('click', () => {
+        hamburgerBtn.classList.toggle('active');
+        mobileMenu.classList.toggle('open');
+    });
 
-                    this.classList.remove("modal-show")
+    // Close mobile menu on link click
+    mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            hamburgerBtn.classList.remove('active');
+            mobileMenu.classList.remove('open');
+        });
+    });
 
-                }
+    // ── MODAL ──
+    function openModal(el) {
+        const modal = document.getElementById('modal');
+        modal.classList.add('modal-show');
 
-            })
+        const img   = el.querySelector('img').src;
+        const title = el.dataset.title;
+        const desc  = el.dataset.desc;
 
-    </script>
+        document.getElementById('modal-img').src = img;
+        modal.querySelector('h2').innerText = title;
+        modal.querySelector('p').innerText  = desc;
+        modal.querySelectorAll('ul')[0].innerHTML = el.dataset.challenges;
+        modal.querySelectorAll('ul')[1].innerHTML = el.dataset.future;
+
+        const links = modal.querySelectorAll('a');
+        links[0].href   = el.dataset.repo;
+        links[0].target = '_blank';
+        links[1].href   = el.dataset.live;
+        links[1].target = '_blank';
+
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        document.getElementById('modal').classList.remove('modal-show');
+        document.body.style.overflow = 'auto';
+    }
+
+    document.getElementById('modal').addEventListener('click', function(e) {
+        if (e.target.id === 'modal') closeModal();
+    });
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeModal();
+    });
+
+    // ── CONTACT FORM ──
+    function handleSubmit(e) {
+        e.preventDefault();
+        const btn = e.target.querySelector('button[type=submit]');
+        btn.innerHTML = '<i class="fa-solid fa-check mr-2"></i>Message Sent!';
+        btn.classList.add('opacity-80');
+        btn.disabled = true;
+        setTimeout(() => {
+            btn.innerHTML = '<i class="fa-solid fa-paper-plane mr-2"></i>Send Message';
+            btn.classList.remove('opacity-80');
+            btn.disabled = false;
+            e.target.reset();
+        }, 3000);
+    }
+</script>
 
 </body>
-
 </html>
